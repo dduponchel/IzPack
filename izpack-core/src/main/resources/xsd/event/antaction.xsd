@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
+           attributeFormDefault="unqualified"
+           targetNamespace="http://izpack.org/xsd/antaction"
+           xmlns="http://izpack.org/xsd/antaction">
+    <xs:element name="antactions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pack" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="pack">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="antcall" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="antcall">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="property" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="propertyfile" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="target" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="uninstall_target" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="order" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="beforepack" />
+                        <xs:enumeration value="afterpack" />
+                        <xs:enumeration value="beforepacks" />
+                        <xs:enumeration value="afterpacks" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="uninstall_order" default="beforedeletion">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="beforedeletion" />
+                        <xs:enumeration value="afterdeletion" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="quiet" default="no">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="yes" />
+                        <xs:enumeration value="no" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="verbose" default="no">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="yes" />
+                        <xs:enumeration value="no" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="logfile" type="xs:string" />
+            <xs:attribute name="messageid" type="xs:string" />
+            <xs:attribute name="buildfile" type="xs:string" />
+            <xs:attribute name="buildresource" type="xs:string" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="property">
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="value" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="propertyfile">
+        <xs:complexType>
+            <xs:attribute name="path" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="target">
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="uninstall_target">
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="optional" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

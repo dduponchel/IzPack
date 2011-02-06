@@ -1,6 +1,7 @@
 <installation version="1.0"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:noNamespaceSchemaLocation="izpack.xsd">
+              xmlns="http://izpack.org/xsd/installation"
+              xsi:schemaLocation="http://izpack.org/xsd/installation ../../../../izpack-core/src/main/resources/xsd/installation.xsd">
 
     <!-- The info section -->
     <info>

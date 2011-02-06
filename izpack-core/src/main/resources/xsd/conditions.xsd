@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
+           attributeFormDefault="unqualified"
+           targetNamespace="http://izpack.org/xsd/conditions"
+           xmlns="http://izpack.org/xsd/conditions">
+    <xs:element name="conditions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="condition" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="panelcondition" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="packcondition" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="condition">
+        <xs:complexType>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element ref="condition" />
+                    <xs:element ref="condition" minOccurs="0" />
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:element ref="name" />
+                    <xs:element ref="value" />
+                </xs:sequence>
+                <xs:element ref="packid" />
+                <xs:sequence>
+                    <xs:element ref="java" />
+                    <xs:element ref="returnvalue" />
+                </xs:sequence>
+                <xs:sequence>
+                    <xs:element ref="obligatory" minOccurs="0" />
+                    <xs:element ref="module" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:choice>
+            <xs:attribute name="id" type="xs:ID" use="optional" />
+            <xs:attribute name="type" type="xs:string" use="required" />
+            <xs:attribute name="refid" type="xs:IDREF" use="optional" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="packcondition">
+        <xs:complexType>
+            <xs:attribute name="packid" type="xs:string" use="required" />
+            <xs:attribute name="conditionid" type="xs:IDREF" use="required" />
+            <xs:attribute name="optional" type="xs:string" use="optional" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="panelcondition">
+        <xs:complexType>
+            <xs:attribute name="panelid" type="xs:string" use="required" />
+            <xs:attribute name="conditionid" type="xs:IDREF" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="name" type="xs:string" />
+    <xs:element name="value" type="xs:string" />
+    <xs:element name="packid" />
+    <xs:element name="returnvalue">
+        <xs:complexType mixed="true">
+            <xs:attribute name="type" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="java">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="class" />
+                <xs:element ref="field" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="field" type="xs:string" />
+    <xs:element name="class" type="xs:string" />
+    <xs:element name="module" />
+    <xs:element name="obligatory" />
+</xs:schema>

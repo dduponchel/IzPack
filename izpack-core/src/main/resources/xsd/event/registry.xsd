@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
+           attributeFormDefault="unqualified"
+           targetNamespace="http://izpack.org/xsd/registry"
+           xmlns="http://izpack.org/xsd/registry">
+    <xs:element name="registry">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pack" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="pack">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="key" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="value" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="key">
+        <xs:complexType>
+            <xs:attribute name="keypath" type="xs:string" use="required" />
+            <xs:attribute name="root" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="HKCR" />
+                        <xs:enumeration value="HKCU" />
+                        <xs:enumeration value="HKLM" />
+                        <xs:enumeration value="HKU" />
+                        <xs:enumeration value="HKPD" />
+                        <xs:enumeration value="HKCC" />
+                        <xs:enumeration value="HKDDS" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="value">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="bin" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element ref="multi" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="keypath" type="xs:string" use="required" />
+            <xs:attribute name="root" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="HKCR" />
+                        <xs:enumeration value="HKCU" />
+                        <xs:enumeration value="HKLM" />
+                        <xs:enumeration value="HKU" />
+                        <xs:enumeration value="HKPD" />
+                        <xs:enumeration value="HKCC" />
+                        <xs:enumeration value="HKDDS" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="override" default="true">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="true" />
+                        <xs:enumeration value="false" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="string" type="xs:string" />
+            <xs:attribute name="dword" type="xs:string" use="optional" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="bin">
+        <xs:complexType>
+            <xs:attribute name="data" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="multi">
+        <xs:complexType>
+            <xs:attribute name="data" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
