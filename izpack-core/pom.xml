@@ -46,8 +46,6 @@
                         <configuration>
                             <schemaDirectory>${basedir}/src/main/resources/xsd/</schemaDirectory>
                             <bindingDirectory>${basedir}/src/main/resources/xsd/</bindingDirectory>
-                            <!--<packageName>com.izforge.izpack.xml.generated.general</packageName>-->
-                            <!--<staleFile>${project.build.directory}/generated-sources/jaxb/.staleFlag_general${}</staleFile>-->
                         </configuration>
                     </execution>
                 </executions>

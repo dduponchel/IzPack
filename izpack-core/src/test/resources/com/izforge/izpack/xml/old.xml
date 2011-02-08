@@ -1,0 +1,16 @@
+<installation version="1.0">
+    <info>
+        <appname>name</appname>
+        <appversion>version</appversion>
+    </info>
+    <packs>
+        <pack>
+            <description>pack test</description>
+        </pack>
+    </packs>
+    <panels>
+    </panels>
+    <locale>
+        <langpack iso3="fr" />
+    </locale>
+</installation>

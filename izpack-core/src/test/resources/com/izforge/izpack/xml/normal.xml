@@ -1,0 +1,19 @@
+<installation version="1.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://izpack.org/xsd/installation"
+              xsi:schemaLocation="http://izpack.org/xsd/installation ../../../../../../../../izpack-core/src/main/resources/xsd/installation.xsd">
+    <info>
+        <appname>name</appname>
+        <appversion>version</appversion>
+    </info>
+    <packs>
+        <pack>
+            <description>pack test</description>
+        </pack>
+    </packs>
+    <panels>
+    </panels>
+    <locale>
+        <langpack iso3="fr" />
+    </locale>
+</installation>
