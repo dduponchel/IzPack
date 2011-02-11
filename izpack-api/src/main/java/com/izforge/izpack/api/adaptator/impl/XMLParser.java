@@ -55,7 +55,7 @@ public class XMLParser implements IXMLParser
 {
 
     // the path of the xsl style sheet, relatively to the IXMLParser class
-    private static final String XSL_FILE_NAME = "styleSheet.xsl";
+    public static final String XSL_FILE_NAME = "styleSheet.xsl";
 
 
     public class ByteBufferInputStream extends InputStream

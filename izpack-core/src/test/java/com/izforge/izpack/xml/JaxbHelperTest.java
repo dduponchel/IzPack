@@ -52,7 +52,7 @@ public class JaxbHelperTest
         assertThat(result.getLocale().getLangpack().size(), is(1));
     }
 
-    @Test(expected = UnmarshalException.class)
+    @Test(expected = JAXBException.class)
     public void invalidXml() throws JAXBException
     {
         InstallationType result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(NOT_A_XML));
@@ -62,12 +62,6 @@ public class JaxbHelperTest
     public void xsdValidation() throws JAXBException
     {
         InstallationType result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(INVALID_XML));
-    }
-
-    @Test
-    public void xinclude()
-    {
-        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Test
