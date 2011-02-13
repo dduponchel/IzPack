@@ -4,7 +4,7 @@ import com.izforge.izpack.api.adaptator.IXMLParser;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.xml.JaxbHelper;
 import org.hamcrest.Matchers;
-import org.izpack.xsd.installation.InstallationType;
+import org.izpack.xsd.installation.Installation;
 import org.izpack.xsd.installation.LangpackType;
 import org.izpack.xsd.installation.PackType;
 import org.junit.Test;
@@ -44,14 +44,14 @@ public abstract class JaxbHelperXincludeTestBase
         URL baseURL = getClass().getResource(fileBase + "-input.xml");
         // set up a new parser to parse the input xml (with includes)
         JaxbHelper jaxbHelper = new JaxbHelper();
-        InstallationType inputInstallation = jaxbHelper.unmarshalInstallation(baseURL.openStream(), baseURL.toExternalForm());
+        Installation inputInstallation = jaxbHelper.unmarshalInstallation(baseURL.openStream(), baseURL.toExternalForm());
         fail("an exception should have been thrown");
     }
 
     /**
      * Perform a deep equality check on the two objects.
      */
-    public void deepEqual(InstallationType a, InstallationType b)
+    public void deepEqual(Installation a, Installation b)
     {
         // TODO : reflection to avoid all of those assertThat ?
 

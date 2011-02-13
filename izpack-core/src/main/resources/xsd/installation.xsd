@@ -2,8 +2,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://izpack.org/xsd/installation"
            targetNamespace="http://izpack.org/xsd/installation" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
-    <xs:element name="installation" type="installationType" />
-    <xs:complexType name="installationType">
+    <xs:element name="installation">
+    <xs:complexType>
         <xs:all>
             <xs:element name="info" type="infoType" minOccurs="1">
                 <xs:annotation>
@@ -42,6 +42,7 @@
         </xs:all>
         <xs:attribute name="version" type="xs:string" />
     </xs:complexType>
+    </xs:element>
     <!-- type for info section -->
     <xs:complexType name="authorType">
         <xs:simpleContent>

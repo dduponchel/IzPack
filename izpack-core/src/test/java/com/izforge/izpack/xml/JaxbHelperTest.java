@@ -1,12 +1,21 @@
 package com.izforge.izpack.xml;
 
-import org.izpack.xsd.installation.InstallationType;
+import generated.Customer;
+import generated.PhoneNumber;
+import org.izpack.xsd.installation.InfoType;
+import org.izpack.xsd.installation.Installation;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.UnmarshalException;
+import javax.xml.XMLConstants;
+import javax.xml.bind.*;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -32,7 +41,7 @@ public class JaxbHelperTest
     @Test
     public void normalXml() throws FileNotFoundException, JAXBException
     {
-        InstallationType result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(NORMAL_XML));
+        Installation result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(NORMAL_XML));
         assertThat(result, is(notNullValue()));
         assertThat(result.getInfo().getAppname(), is("name"));
         assertThat(result.getInfo().getAppversion(), is("version"));
@@ -44,7 +53,7 @@ public class JaxbHelperTest
     public void oldXml() throws FileNotFoundException, JAXBException
     {
         // without namespace or other xml complex stuff, we must understand "old" install.xml
-        InstallationType result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(OLD_XML));
+        Installation result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(OLD_XML));
         assertThat(result, is(notNullValue()));
         assertThat(result.getInfo().getAppname(), is("name"));
         assertThat(result.getInfo().getAppversion(), is("version"));
@@ -55,18 +64,28 @@ public class JaxbHelperTest
     @Test(expected = JAXBException.class)
     public void invalidXml() throws JAXBException
     {
-        InstallationType result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(NOT_A_XML));
+        Installation result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(NOT_A_XML));
     }
 
     @Test(expected = UnmarshalException.class)
     public void xsdValidation() throws JAXBException
     {
-        InstallationType result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(INVALID_XML));
+        Installation result = jaxbHelper.unmarshalInstallation(this.getClass().getResourceAsStream(INVALID_XML));
     }
 
     @Test
     public void substitution()
     {
         throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Test(expected = JAXBException.class)
+    public void testMarshal() throws IOException, JAXBException
+    {
+        Installation installation = new Installation();
+        installation.setInfo(new InfoType());
+        installation.getInfo().setAppname("appname");
+        installation.getInfo().setAppversion("version");
+        jaxbHelper.marshal(installation, System.out);
     }
 }

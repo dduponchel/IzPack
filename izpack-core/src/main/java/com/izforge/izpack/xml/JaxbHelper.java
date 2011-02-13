@@ -3,16 +3,13 @@ package com.izforge.izpack.xml;
 import com.izforge.izpack.api.adaptator.IXMLParser;
 import com.izforge.izpack.api.adaptator.XMLException;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
-import org.izpack.xsd.installation.InstallationType;
+import org.izpack.xsd.installation.Installation;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLFilter;
 import org.xml.sax.XMLReader;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.*;
@@ -34,13 +31,26 @@ public class JaxbHelper
      */
     private static class XmlSchema
     {
+        SchemaFactory schemaFactory;
+        {
+            schemaFactory = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        }
         private final String xsd;
         private final String namespace;
+        private Schema schema;
 
         private XmlSchema(String xsd, String namespace)
         {
             this.xsd = xsd;
             this.namespace = namespace;
+            try
+            {
+                this.schema = schemaFactory.newSchema(this.getClass().getResource(xsd));
+            }
+            catch (SAXException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
 
         public String getNamespace()
@@ -51,6 +61,11 @@ public class JaxbHelper
         public String getXsd()
         {
             return xsd;
+        }
+
+        public Schema getSchema()
+        {
+            return schema;
         }
     }
 
@@ -63,22 +78,60 @@ public class JaxbHelper
      * @return an InstallationType
      * @throws JAXBException if something is wrong with the xml
      */
-    public InstallationType unmarshalInstallation(InputStream input) throws JAXBException
+    public Installation unmarshalInstallation(InputStream input) throws JAXBException
     {
         return unmarshalInstallation(input, null);
     }
 
     /**
-     * unmarshal an xml into a InstallationType
+     * unmarshal an xml into a Installation
      *
      * @param input the xml
      * @param systemId System id of the file parsed
-     * @return an InstallationType
+     * @return an Installation
      * @throws JAXBException if something is wrong with the xml
      */
-    public InstallationType unmarshalInstallation(InputStream input, String systemId) throws JAXBException
+    public Installation unmarshalInstallation(InputStream input, String systemId) throws JAXBException
     {
-        return unmarshal(input, INSTALLATION, InstallationType.class, systemId);
+        return unmarshal(input, INSTALLATION, Installation.class, systemId);
+    }
+
+    /**
+     * Marshal an object into an xml
+     * @param installation the object to marshal
+     * @param destination the file to put the xml into
+     * @throws JAXBException if something went wrong
+     */
+    public void marshal(Installation installation, File destination) throws JAXBException
+    {
+        try
+        {
+            FileOutputStream os = new FileOutputStream(destination);
+            marshal(installation, os);
+            os.close();
+        }
+        catch (IOException e)
+        {
+            throw new JAXBException(e);
+        }
+    }
+
+    /**
+     * Marshal an object into an xml
+     * @param installation the object to marshal
+     * @param os the stream to put the xml into
+     * @throws JAXBException if something went wrong
+     */
+    public void marshal(Installation installation, OutputStream os) throws JAXBException
+    {
+        JAXBContext context = JAXBContext.newInstance(Installation.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//        marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "http://izpack.org/xsd/installation ../../install.xsd");
+
+        // validate that the result xml will be valid 
+        marshaller.setSchema(INSTALLATION.getSchema());
+        marshaller.marshal(installation, os);
     }
 
     /**
@@ -101,9 +154,7 @@ public class JaxbHelper
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
             // validate the xml with an xsd
-            SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = sf.newSchema(this.getClass().getResource(xmlSchema.getXsd()));
-            unmarshaller.setSchema(schema);
+            unmarshaller.setSchema(xmlSchema.getSchema());
 
 
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
