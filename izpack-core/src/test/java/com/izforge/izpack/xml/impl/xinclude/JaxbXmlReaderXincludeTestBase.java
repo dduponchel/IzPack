@@ -1,9 +1,6 @@
-package com.izforge.izpack.xml.xinclude;
+package com.izforge.izpack.xml.impl.xinclude;
 
-import com.izforge.izpack.api.adaptator.IXMLParser;
-import com.izforge.izpack.api.adaptator.impl.XMLParser;
-import com.izforge.izpack.xml.JaxbHelper;
-import org.hamcrest.Matchers;
+import com.izforge.izpack.xml.impl.JaxbXmlReader;
 import org.izpack.xsd.installation.Installation;
 import org.izpack.xsd.installation.LangpackType;
 import org.izpack.xsd.installation.PackType;
@@ -12,7 +9,6 @@ import org.junit.Test;
 import javax.xml.bind.JAXBException;
 import java.net.URL;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -20,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * Base class for xinclude tests.
  */
-public abstract class JaxbHelperXincludeTestBase
+public abstract class JaxbXmlReaderXincludeTestBase
 {
 
     /**
@@ -43,8 +39,8 @@ public abstract class JaxbHelperXincludeTestBase
     {
         URL baseURL = getClass().getResource(fileBase + "-input.xml");
         // set up a new parser to parse the input xml (with includes)
-        JaxbHelper jaxbHelper = new JaxbHelper();
-        Installation inputInstallation = jaxbHelper.unmarshalInstallation(baseURL.openStream(), baseURL.toExternalForm());
+        JaxbXmlReader xmlReader = new JaxbXmlReader();
+        Installation inputInstallation = xmlReader.readInstallation(baseURL.openStream(), baseURL.toExternalForm());
         fail("an exception should have been thrown");
     }
 
@@ -63,7 +59,7 @@ public abstract class JaxbHelperXincludeTestBase
         assertThat(a.getPacks(), is(not(nullValue())));
         assertThat(b.getPacks(), is(not(nullValue())));
         assertThat(a.getPacks().getPack().size(), is(b.getPacks().getPack().size()));
-        for(int i = 0; i< a.getPacks().getPack().size(); i++)
+        for (int i = 0; i < a.getPacks().getPack().size(); i++)
         {
             PackType packA = a.getPacks().getPack().get(i);
             PackType packB = b.getPacks().getPack().get(i);
@@ -72,7 +68,7 @@ public abstract class JaxbHelperXincludeTestBase
         assertThat(a.getLocale(), is(not(nullValue())));
         assertThat(b.getLocale(), is(not(nullValue())));
         assertThat(a.getLocale().getLangpack().size(), is(b.getLocale().getLangpack().size()));
-        for(int i = 0; i< a.getLocale().getLangpack().size(); i++)
+        for (int i = 0; i < a.getLocale().getLangpack().size(); i++)
         {
             LangpackType localeA = a.getLocale().getLangpack().get(i);
             LangpackType localeB = b.getLocale().getLangpack().get(i);
