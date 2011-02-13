@@ -1,21 +1,12 @@
 package com.izforge.izpack.xml;
 
-import generated.Customer;
-import generated.PhoneNumber;
-import org.izpack.xsd.installation.InfoType;
-import org.izpack.xsd.installation.Installation;
+import org.izpack.xsd.installation.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import javax.xml.XMLConstants;
-import javax.xml.bind.*;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.UnmarshalException;
+import java.io.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,6 +21,7 @@ public class JaxbHelperTest
     private static final String NOT_A_XML = "not-a-xml.txt";
     private static final String INVALID_XML = "invalid.xml";
     private static final String OLD_XML = "old.xml";
+    private static final String MARSHAL_EXPECTED_XML = "marshalExpected.xml";
     private JaxbHelper jaxbHelper;
 
     @Before
@@ -80,12 +72,69 @@ public class JaxbHelperTest
     }
 
     @Test(expected = JAXBException.class)
-    public void testMarshal() throws IOException, JAXBException
+    public void marshalInvalidObject() throws IOException, JAXBException
     {
+        // not enough informations to create a consistent installation.xml
         Installation installation = new Installation();
         installation.setInfo(new InfoType());
         installation.getInfo().setAppname("appname");
         installation.getInfo().setAppversion("version");
         jaxbHelper.marshal(installation, System.out);
+    }
+
+    @Test
+    public void marshalValidObject() throws IOException, JAXBException
+    {
+        Installation installation = new Installation();
+        installation.setInfo(new InfoType());
+        installation.getInfo().setAppname("appname");
+        installation.getInfo().setAppversion("version");
+        installation.setLocale(new LocaleType());
+        LangpackType lang = new LangpackType();
+        lang.setIso3("fr");
+        installation.getLocale().getLangpack().add(lang);
+        installation.setPacks(new PacksType());
+        PackType pack = new PackType();
+        pack.setDescription("description");
+        pack.setName("name");
+        installation.getPacks().getPack().add(pack);
+        installation.setPanels(new PanelsType());
+
+        OutputStream output = new OutputStream()
+        {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException
+            {
+                this.string.append((char) b);
+            }
+
+            @Override
+            public String toString()
+            {
+                return this.string.toString();
+            }
+        };
+
+        jaxbHelper.marshal(installation, output);
+
+
+        InputStream expectedStream = this.getClass().getResourceAsStream(MARSHAL_EXPECTED_XML);
+        final char[] buffer = new char[0x10000];
+        StringBuilder expected = new StringBuilder();
+        Reader in = new InputStreamReader(expectedStream, "UTF-8");
+        int read;
+        do
+        {
+            read = in.read(buffer, 0, buffer.length);
+            if (read > 0)
+            {
+                expected.append(buffer, 0, read);
+            }
+        }
+        while (read >= 0);
+
+        assertThat(output.toString(), is(expected.toString()));
     }
 }

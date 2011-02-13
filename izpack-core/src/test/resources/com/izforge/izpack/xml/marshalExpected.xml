@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<installation xmlns="http://izpack.org/xsd/installation">
+    <info>
+        <appname>appname</appname>
+        <appversion>version</appversion>
+    </info>
+    <locale>
+        <langpack iso3="fr"/>
+    </locale>
+    <panels/>
+    <packs>
+        <pack name="name">
+            <description>description</description>
+        </pack>
+    </packs>
+</installation>
