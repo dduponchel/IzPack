@@ -154,6 +154,8 @@ public class Packager extends PackagerBase
         mergeManager.addResourceToMerge("com/izforge/izpack/gui/");
         mergeManager.addResourceToMerge("com/izforge/izpack/merge/");
         mergeManager.addResourceToMerge("com/izforge/izpack/util/");
+        mergeManager.addResourceToMerge("com/izforge/izpack/xml/");
+        mergeManager.addResourceToMerge("org/izpack/xsd/");
         mergeManager.addResourceToMerge("org/apache/regexp/");
         mergeManager.addResourceToMerge("com/coi/tools/");
         mergeManager.addResourceToMerge("org/apache/tools/zip/");

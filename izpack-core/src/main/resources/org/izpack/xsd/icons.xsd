@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://izpack.org/xsd/icons"
+           targetNamespace="http://izpack.org/xsd/icons" elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+	<xs:element name="icons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="icon" type="iconType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="sysicon" type="iconType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="iconType">
+		<xs:attribute name="id" use="required"/>
+		<xs:attribute name="res" use="required"/>
+	</xs:complexType>
+</xs:schema>

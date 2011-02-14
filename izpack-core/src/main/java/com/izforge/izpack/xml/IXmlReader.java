@@ -1,6 +1,7 @@
 package com.izforge.izpack.xml;
 
 import com.izforge.izpack.api.adaptator.XMLException;
+import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
 
 import java.io.InputStream;
@@ -28,4 +29,11 @@ public interface IXmlReader
      * @throws XMLException if something is wrong with the xml
      */
     Installation readInstallation(InputStream input, String systemId) throws XMLException;
+
+    /**
+     * unmarshal an xml into a list of icons
+     *
+     * @param input    the xml
+     */
+    Icons readIcons(InputStream input) throws XMLException;
 }

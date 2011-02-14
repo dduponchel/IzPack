@@ -7,6 +7,10 @@ import com.izforge.izpack.api.data.ResourceManager;
 import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.installer.base.InstallerFrame;
 import com.izforge.izpack.util.Debug;
+import com.izforge.izpack.xml.IXmlReader;
+import com.izforge.izpack.xml.impl.JaxbXmlReader;
+import org.izpack.xsd.icons.IconType;
+import org.izpack.xsd.icons.Icons;
 import org.picocontainer.injectors.Provider;
 
 import javax.swing.*;
@@ -81,26 +85,28 @@ public class IconsProvider implements Provider
     {
         URL url;
         ImageIcon img;// Initialises the parser
-        IXMLParser parser = new XMLParser();
+
+        // TODO use ioc
+        IXmlReader xmlReader = new JaxbXmlReader();
 
         // We get the data
-        IXMLElement data = parser.parse(inXML);
+        Icons xmlIcons = xmlReader.readIcons(inXML);
 
         // We load the icons
-        for (IXMLElement icon : data.getChildrenNamed("icon"))
+        for (IconType icon : xmlIcons.getIcon())
         {
-            url = InstallerFrame.class.getResource(icon.getAttribute("res"));
+            url = InstallerFrame.class.getResource(icon.getRes());
             img = new ImageIcon(url);
-            Debug.trace("Icon with id found: " + icon.getAttribute("id"));
-            icons.put(icon.getAttribute("id"), img);
+            Debug.trace("Icon with id found: " + icon.getId());
+            icons.put(icon.getId(), img);
         }
 
         // We load the Swing-specific icons
-        for (IXMLElement icon : data.getChildrenNamed("sysicon"))
+        for (IconType icon : xmlIcons.getSysicon())
         {
-            url = InstallerFrame.class.getResource(icon.getAttribute("res"));
+            url = InstallerFrame.class.getResource(icon.getRes());
             img = new ImageIcon(url);
-            UIManager.put(icon.getAttribute("id"), img);
+            UIManager.put(icon.getId(), img);
         }
     }
 

@@ -5,6 +5,7 @@ import com.izforge.izpack.api.adaptator.XMLException;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.xml.IXmlReader;
 import com.izforge.izpack.xml.XmlSchema;
+import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -40,6 +41,12 @@ public class JaxbXmlReader implements IXmlReader
     public Installation readInstallation(InputStream input, String systemId) throws XMLException
     {
         return unmarshal(input, XmlSchema.INSTALLATION, Installation.class, systemId);
+    }
+
+    @Override
+    public Icons readIcons(InputStream input) throws XMLException
+    {
+        return unmarshal(input, XmlSchema.ICONS, Icons.class, null);
     }
 
 

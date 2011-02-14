@@ -10,7 +10,8 @@ import javax.xml.validation.SchemaFactory;
  */
 public enum XmlSchema
 {
-    INSTALLATION("/xsd/installation.xsd", "http://izpack.org/xsd/installation");
+    INSTALLATION("/org/izpack/xsd/installation.xsd", "http://izpack.org/xsd/installation"),
+    ICONS("/org/izpack/xsd/icons.xsd", "http://izpack.org/xsd/icons");
 
     SchemaFactory schemaFactory;
 
