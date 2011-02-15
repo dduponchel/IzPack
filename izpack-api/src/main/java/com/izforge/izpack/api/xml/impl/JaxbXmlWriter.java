@@ -1,8 +1,8 @@
-package com.izforge.izpack.xml.impl;
+package com.izforge.izpack.api.xml.impl;
 
 import com.izforge.izpack.api.adaptator.XMLException;
-import com.izforge.izpack.xml.IXmlWriter;
-import com.izforge.izpack.xml.XmlSchema;
+import com.izforge.izpack.api.xml.IXmlWriter;
+import com.izforge.izpack.api.xml.XmlSchema;
 import org.izpack.xsd.installation.Installation;
 
 import javax.xml.bind.JAXBContext;

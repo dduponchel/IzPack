@@ -1,4 +1,4 @@
-package com.izforge.izpack.xml;
+package com.izforge.izpack.api.xml;
 
 import com.izforge.izpack.api.adaptator.XMLException;
 import org.izpack.xsd.icons.Icons;

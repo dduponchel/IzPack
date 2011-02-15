@@ -1,10 +1,10 @@
-package com.izforge.izpack.xml.impl;
+package com.izforge.izpack.api.xml.impl;
 
 import com.izforge.izpack.api.adaptator.IXMLParser;
 import com.izforge.izpack.api.adaptator.XMLException;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
-import com.izforge.izpack.xml.IXmlReader;
-import com.izforge.izpack.xml.XmlSchema;
+import com.izforge.izpack.api.xml.IXmlReader;
+import com.izforge.izpack.api.xml.XmlSchema;
 import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
 import org.xml.sax.InputSource;

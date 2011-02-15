@@ -1,4 +1,4 @@
-package com.izforge.izpack.xml.impl;
+package com.izforge.izpack.api.xml.impl;
 
 import com.izforge.izpack.api.adaptator.XMLException;
 import org.izpack.xsd.installation.*;

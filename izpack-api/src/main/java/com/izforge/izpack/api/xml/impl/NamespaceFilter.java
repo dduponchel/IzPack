@@ -1,4 +1,4 @@
-package com.izforge.izpack.xml.impl;
+package com.izforge.izpack.api.xml.impl;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLFilterImpl;

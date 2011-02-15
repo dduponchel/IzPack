@@ -1,6 +1,6 @@
-package com.izforge.izpack.xml.impl.xinclude;
+package com.izforge.izpack.api.xml.impl.xinclude;
 
-import com.izforge.izpack.xml.impl.JaxbXmlReader;
+import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
 import org.izpack.xsd.installation.Installation;
 
 import java.net.URL;

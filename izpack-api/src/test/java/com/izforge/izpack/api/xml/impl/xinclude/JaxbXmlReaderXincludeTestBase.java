@@ -1,6 +1,7 @@
-package com.izforge.izpack.xml.impl.xinclude;
+package com.izforge.izpack.api.xml.impl.xinclude;
 
-import com.izforge.izpack.xml.impl.JaxbXmlReader;
+import com.izforge.izpack.api.adaptator.XMLException;
+import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
 import org.izpack.xsd.installation.Installation;
 import org.izpack.xsd.installation.LangpackType;
 import org.izpack.xsd.installation.PackType;
@@ -151,7 +152,7 @@ public abstract class JaxbXmlReaderXincludeTestBase
      *
      * @throws Exception
      */
-    @Test(expected = JAXBException.class)
+    @Test(expected = XMLException.class)
     public void testParseInvalidAttribute() throws Exception
     {
         parseInputForFailures("invalid-parse-attrib");

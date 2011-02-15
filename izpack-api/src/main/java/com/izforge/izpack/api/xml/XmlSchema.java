@@ -1,4 +1,4 @@
-package com.izforge.izpack.xml;
+package com.izforge.izpack.api.xml;
 
 import org.xml.sax.SAXException;
 
@@ -33,6 +33,7 @@ public enum XmlSchema
         }
         catch (SAXException e)
         {
+            // if the schema is found, then this jar file is corrupted, at best !
             throw new RuntimeException(e);
         }
     }
