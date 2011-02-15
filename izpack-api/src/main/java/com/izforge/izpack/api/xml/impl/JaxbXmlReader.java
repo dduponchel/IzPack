@@ -7,6 +7,7 @@ import com.izforge.izpack.api.xml.IXmlReader;
 import com.izforge.izpack.api.xml.XmlSchema;
 import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
+import org.izpack.xsd.langpack.Langpack;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLFilter;
@@ -47,6 +48,12 @@ public class JaxbXmlReader implements IXmlReader
     public Icons readIcons(InputStream input) throws XMLException
     {
         return unmarshal(input, XmlSchema.ICONS, Icons.class, null);
+    }
+
+    @Override
+    public Langpack readLocales(InputStream input)
+    {
+        return unmarshal(input, XmlSchema.LANGPACK, Langpack.class, null);
     }
 
 

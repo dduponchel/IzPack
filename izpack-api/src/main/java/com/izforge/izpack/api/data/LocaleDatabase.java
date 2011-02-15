@@ -23,6 +23,10 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.IXMLParser;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.exception.IzPackException;
+import com.izforge.izpack.api.xml.IXmlReader;
+import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
+import org.izpack.xsd.langpack.Langpack;
+import org.izpack.xsd.langpack.Str;
 
 import java.io.InputStream;
 import java.text.MessageFormat;
@@ -85,27 +89,22 @@ public class LocaleDatabase extends TreeMap<String, String>
     {
         // Initialises the parser
         IXMLParser parser = new XMLParser();
+        IXmlReader xmlReader = new JaxbXmlReader();
         // We get the data
-        IXMLElement data = parser.parse(in);
-
-        // We check the data
-        if (!"langpack".equalsIgnoreCase(data.getName()))
-        {
-            throw new IzPackException(
-                    "this is not an IzPack XML langpack file");
-        }
+        Langpack locales = xmlReader.readLocales(in);
 
         // We fill the Hashtable
-        for (IXMLElement child : data.getChildren())
+        for (Str str : locales.getStr())
         {
-            String text = child.getContent();
+            // TODO the attribute txt is mandatory, should we change the xsd to accept also a content ?
+            String text = str.getContent();
             if (text != null && !"".equals(text))
             {
-                put(child.getAttribute("id"), text.trim());
+                put(str.getId(), text.trim());
             }
             else
             {
-                put(child.getAttribute("id"), child.getAttribute("txt"));
+                put(str.getId(), str.getTxt());
             }
         }
 

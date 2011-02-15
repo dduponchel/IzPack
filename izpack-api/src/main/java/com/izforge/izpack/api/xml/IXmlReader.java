@@ -3,6 +3,7 @@ package com.izforge.izpack.api.xml;
 import com.izforge.izpack.api.adaptator.XMLException;
 import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
+import org.izpack.xsd.langpack.Langpack;
 
 import java.io.InputStream;
 
@@ -36,4 +37,11 @@ public interface IXmlReader
      * @param input    the xml
      */
     Icons readIcons(InputStream input) throws XMLException;
+
+    /**
+     * unmarshal an xml into a list of locales
+     *
+     * @param input    the xml
+     */
+    Langpack readLocales(InputStream input);
 }

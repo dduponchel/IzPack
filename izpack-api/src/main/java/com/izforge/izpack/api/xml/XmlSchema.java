@@ -11,7 +11,8 @@ import javax.xml.validation.SchemaFactory;
 public enum XmlSchema
 {
     INSTALLATION("/org/izpack/xsd/installation.xsd", "http://izpack.org/xsd/installation"),
-    ICONS("/org/izpack/xsd/icons.xsd", "http://izpack.org/xsd/icons");
+    ICONS("/org/izpack/xsd/icons.xsd", "http://izpack.org/xsd/icons"),
+    LANGPACK("/org/izpack/xsd/langpack.xsd", "http://izpack.org/xsd/langpack");
 
     SchemaFactory schemaFactory;
 
