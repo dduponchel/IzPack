@@ -10,6 +10,9 @@ import com.izforge.izpack.core.container.ConditionContainer;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
 import com.izforge.izpack.merge.resolve.ClassPathCrawler;
 import com.izforge.izpack.util.Debug;
+import com.izforge.izpack.api.xml.IXmlReader;
+import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
+import org.izpack.xsd.conditions.Conditions;
 import org.picocontainer.injectors.Provider;
 
 import java.io.InputStream;
@@ -65,12 +68,12 @@ public class RulesProvider implements Provider
                 res = new RulesEngineImpl(installdata, classPathCrawler, conditionContainer);
                 return res;
             }
-            XMLParser xmlParser = new XMLParser();
+            IXmlReader xmlReader = new JaxbXmlReader();
 
             // get the data
-            IXMLElement conditionsxml = xmlParser.parse(input);
+            Conditions conditions = xmlReader.readConditions(input);
             res = new RulesEngineImpl(installdata, classPathCrawler, conditionContainer);
-            res.analyzeXml(conditionsxml);
+            res.analyzeXml(conditions);
         }
         catch (Exception e)
         {

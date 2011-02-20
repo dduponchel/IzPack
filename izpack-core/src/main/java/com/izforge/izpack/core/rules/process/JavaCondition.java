@@ -25,6 +25,9 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.conditions.Java;
+import org.izpack.xsd.conditions.Returnvalue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -140,41 +143,29 @@ public class JavaCondition extends Condition
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        if (xmlcondition.getChildrenCount() != 2)
+        if (xmlcondition.getJava() == null || xmlcondition.getReturnvalue() == null)
         {
             throw new Exception("Condition of type java needs (java,returnvalue)");
         }
-        IXMLElement javael = xmlcondition.getFirstChildNamed("java");
-        IXMLElement classel = javael.getFirstChildNamed("class");
-        if (classel != null)
-        {
-            this.classname = classel.getContent();
-        }
-        else
+        Java javael = xmlcondition.getJava();
+        this.classname = javael.getClazz();
+        this.methodname = javael.getMethod();
+        this.fieldname = javael.getField();
+        if (classname == null)
         {
             throw new Exception("Java-Element needs (class,method?,field?)");
-        }
-        IXMLElement methodel = javael.getFirstChildNamed("method");
-        if (methodel != null)
-        {
-            this.methodname = methodel.getContent();
-        }
-        IXMLElement fieldel = javael.getFirstChildNamed("field");
-        if (fieldel != null)
-        {
-            this.fieldname = fieldel.getContent();
         }
         if ((this.methodname == null) && (this.fieldname == null))
         {
             throw new Exception("java element needs (class, method?,field?)");
         }
-        IXMLElement returnvalel = xmlcondition.getFirstChildNamed("returnvalue");
+        Returnvalue returnvalel = xmlcondition.getReturnvalue();
         if (returnvalel != null)
         {
             this.returnvalue = returnvalel.getContent();
-            this.returnvaluetype = returnvalel.getAttribute("type");
+            this.returnvaluetype = returnvalel.getType();
         }
         else
         {

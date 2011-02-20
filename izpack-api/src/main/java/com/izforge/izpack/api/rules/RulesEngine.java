@@ -1,6 +1,8 @@
 package com.izforge.izpack.api.rules;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
+import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.conditions.Conditions;
 
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -36,9 +38,9 @@ public interface RulesEngine extends Serializable
 
     void readConditionMap(Map<String, Condition> rules);
 
-    void analyzeXml(IXMLElement conditionsspec);
+    void analyzeXml(Conditions conditionsspec);
 
-    Condition instanciateCondition(IXMLElement condition);
+    Condition instanciateCondition(ConditionType condition);
 
     IXMLElement createConditionElement(Condition condition, IXMLElement root);
 }

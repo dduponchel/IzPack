@@ -1,19 +1,17 @@
 package com.izforge.izpack.installer.container.provider;
 
-import com.izforge.izpack.api.adaptator.IXMLElement;
-import com.izforge.izpack.api.adaptator.IXMLParser;
-import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.data.ResourceManager;
+import com.izforge.izpack.api.xml.IXmlReader;
+import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
 import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.installer.base.InstallerFrame;
 import com.izforge.izpack.util.Debug;
-import com.izforge.izpack.xml.IXmlReader;
-import com.izforge.izpack.xml.impl.JaxbXmlReader;
 import org.izpack.xsd.icons.IconType;
 import org.izpack.xsd.icons.Icons;
 import org.picocontainer.injectors.Provider;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 import java.io.InputStream;
 import java.net.URL;
 

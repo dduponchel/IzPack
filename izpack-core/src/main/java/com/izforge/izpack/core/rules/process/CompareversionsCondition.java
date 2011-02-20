@@ -28,6 +28,7 @@ import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorBase;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorImpl;
+import org.izpack.xsd.conditions.ConditionType;
 
 public class CompareversionsCondition extends Condition
 {
@@ -80,19 +81,19 @@ public class CompareversionsCondition extends Condition
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        operand1 = xmlcondition.getFirstChildNamed("arg1").getContent();
+        operand1 = xmlcondition.getArg1();
         if (operand1 == null)
         {
             throw new Exception("Missing \"arg1\" element in condition \"" +  getId() + "\"");
         }
-        operand2 = xmlcondition.getFirstChildNamed("arg2").getContent();
+        operand2 = xmlcondition.getArg2();
         if (operand2 == null)
         {
             throw new Exception("Missing \"arg2\" element in condition \"" +  getId() + "\"");
         }
-        String operatorAttr = xmlcondition.getFirstChildNamed("operator").getContent();
+        String operatorAttr = xmlcondition.getOperator();
         if (operatorAttr != null)
         {
             operator = ComparisonOperator.getComparisonOperatorFromAttribute(operatorAttr);

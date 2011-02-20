@@ -26,6 +26,7 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * @author Dennis Reil, <izpack@reil-online.de>
@@ -82,19 +83,19 @@ public class ComparenumericsCondition extends Condition
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        variablename = xmlcondition.getFirstChildNamed("name").getContent();
+        variablename = xmlcondition.getName();
         if (variablename == null)
         {
             throw new Exception("Missing \"name\" element in condition \"" +  getId() + "\"");
         }
-        value = xmlcondition.getFirstChildNamed("value").getContent();
+        value = xmlcondition.getValue();
         if (value == null)
         {
             throw new Exception("Missing \"value\" element in condition \"" +  getId() + "\"");
         }
-        String operatorAttr = xmlcondition.getFirstChildNamed("operator").getContent();
+        String operatorAttr = xmlcondition.getOperator();
         if (operatorAttr != null)
         {
             operator = ComparisonOperator.getComparisonOperatorFromAttribute(operatorAttr);

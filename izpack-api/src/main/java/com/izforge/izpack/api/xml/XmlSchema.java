@@ -12,6 +12,7 @@ public enum XmlSchema
 {
     INSTALLATION("/org/izpack/xsd/installation.xsd", "http://izpack.org/xsd/installation"),
     ICONS("/org/izpack/xsd/icons.xsd", "http://izpack.org/xsd/icons"),
+    CONDITIONS("/org/izpack/xsd/conditions.xsd", "http://izpack.org/xsd/conditions"),
     LANGPACK("/org/izpack/xsd/langpack.xsd", "http://izpack.org/xsd/langpack");
 
     SchemaFactory schemaFactory;

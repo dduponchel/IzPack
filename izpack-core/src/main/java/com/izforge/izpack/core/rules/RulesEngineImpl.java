@@ -40,6 +40,10 @@ import com.izforge.izpack.core.rules.process.JavaCondition;
 import com.izforge.izpack.core.rules.process.PackselectionCondition;
 import com.izforge.izpack.merge.resolve.ClassPathCrawler;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.conditions.Conditions;
+import org.izpack.xsd.conditions.Packcondition;
+import org.izpack.xsd.conditions.Panelcondition;
 
 import java.io.OutputStream;
 import java.util.*;
@@ -165,10 +169,10 @@ public class RulesEngineImpl implements RulesEngine
         return conditionids;
     }
 
-    public Condition instanciateCondition(IXMLElement condition)
+    public Condition instanciateCondition(ConditionType condition)
     {
-        String condid = condition.getAttribute("id");
-        String condtype = condition.getAttribute("type");
+        String condid = condition.getId();
+        String condtype = condition.getType();
         Condition result = null;
         if (condtype != null)
         {
@@ -209,19 +213,19 @@ public class RulesEngineImpl implements RulesEngine
      *
      * @param conditionsspec
      */
-    public void analyzeXml(IXMLElement conditionsspec)
+    public void analyzeXml(Conditions conditionsspec)
     {
         if (conditionsspec == null)
         {
             Debug.trace("No specification for conditions found.");
             return;
         }
-        if (conditionsspec.hasChildren())
+        if (!conditionsspec.getCondition().isEmpty())
         {
             // read in the condition specs
-            List<IXMLElement> childs = conditionsspec.getChildrenNamed("condition");
+            List<ConditionType> childs = conditionsspec.getCondition();
 
-            for (IXMLElement condition : childs)
+            for (ConditionType condition : childs)
             {
                 Condition cond = instanciateCondition(condition);
                 if (cond != null)
@@ -236,24 +240,24 @@ public class RulesEngineImpl implements RulesEngine
                 }
             }
 
-            List<IXMLElement> panelconditionels = conditionsspec
-                    .getChildrenNamed("panelcondition");
-            for (IXMLElement panelel : panelconditionels)
+            List<Panelcondition> panelconditionels = conditionsspec
+                    .getPanelcondition();
+            for (Panelcondition panelel : panelconditionels)
             {
-                String panelid = panelel.getAttribute("panelid");
-                String conditionid = panelel.getAttribute("conditionid");
+                String panelid = panelel.getPanelid();
+                String conditionid = ((ConditionType)panelel.getConditionid()).getId();
                 this.panelconditions.put(panelid, conditionid);
             }
 
-            List<IXMLElement> packconditionels = conditionsspec
-                    .getChildrenNamed("packcondition");
-            for (IXMLElement panelel : packconditionels)
+            List<Packcondition> packconditionels = conditionsspec
+                    .getPackcondition();
+            for (Packcondition panelel : packconditionels)
             {
-                String panelid = panelel.getAttribute("packid");
-                String conditionid = panelel.getAttribute("conditionid");
+                String panelid = panelel.getPackid();
+                String conditionid = ((ConditionType)panelel.getConditionid()).getId();
                 this.packconditions.put(panelid, conditionid);
                 // optional install allowed, if condition is not met?
-                String optional = panelel.getAttribute("optional");
+                String optional = panelel.getOptional();
                 if (optional != null)
                 {
                     boolean optionalinstall = Boolean.valueOf(optional);

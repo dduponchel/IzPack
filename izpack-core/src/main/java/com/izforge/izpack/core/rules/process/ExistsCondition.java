@@ -33,6 +33,7 @@ import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorBase;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorImpl;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * This condition checks if a certain variable has a value. If it is not
@@ -80,31 +81,32 @@ public class ExistsCondition extends Condition
                 break;
 
             default:
-                Debug.error("Illegal content type '"+contentType.getAttribute()+"' of ExistsCondition");
+                Debug.error("Illegal content type '" + contentType.getAttribute() + "' of ExistsCondition");
                 break;
         }
         return result;
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
         if (xmlcondition != null)
         {
-            if (xmlcondition.getChildrenCount() != 1)
+            if (xmlcondition.getVariable() != null ^ xmlcondition.getFile() != null)
             {
                 throw new Exception("Condition \"" + getId() + "\" needs exactly one nested element");
             }
-            else {
-                IXMLElement child = xmlcondition.getChildAtIndex(0);
-                this.contentType = ContentType.getFromAttribute(child.getName());
-                if (this.contentType != null)
+            else
+            {
+                if (xmlcondition.getFile() != null)
                 {
-                    this.content = child.getContent();
+                    contentType = ContentType.FILE;
+                    content = xmlcondition.getFile();
                 }
                 else
                 {
-                    throw new Exception("Unknown nested element '"+child.getName()+"' to condition \"" + getId() + "\"");
+                    contentType = ContentType.VARIABLE;
+                    content = xmlcondition.getVariable();
                 }
                 if (this.content == null || this.content.length() == 0)
                 {

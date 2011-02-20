@@ -27,6 +27,7 @@ import java.util.Set;
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * Defines a condition where both operands have to be true
@@ -56,13 +57,13 @@ public class AndCondition extends Condition
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        if (xmlcondition.getChildrenCount() <= 0)
+        if (xmlcondition.getCondition().isEmpty())
         {
             throw new Exception("Missing nested element in condition \"" + getId() + "\"");
         }
-        for (IXMLElement element : xmlcondition.getChildren())
+        for (ConditionType element : xmlcondition.getCondition())
         {
             nestedConditions.add(rulesEngineImpl.instanciateCondition(element));
         }

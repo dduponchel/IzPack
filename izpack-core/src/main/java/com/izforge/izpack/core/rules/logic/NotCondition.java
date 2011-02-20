@@ -26,6 +26,7 @@ import com.izforge.izpack.api.data.AutomatedInstallData;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * @author Dennis Reil, <izpack@reil-online.de>
@@ -46,17 +47,17 @@ public class NotCondition extends Condition
      * {@inheritDoc}
      */
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        if (xmlcondition.getChildrenCount() <= 0)
+        if (xmlcondition.getCondition().isEmpty())
         {
             throw new Exception("Missing nested element in condition \"" + getId() + "\"");
         }
-        else if (xmlcondition.getChildrenCount() != 1)
+        else if (xmlcondition.getCondition().size() != 1)
         {
             throw new Exception("Condition \"" + getId() + "\" needs exactly one condition as operand");
         }
-        this.operand = rulesEngineImpl.instanciateCondition(xmlcondition.getChildAtIndex(0));
+        this.operand = rulesEngineImpl.instanciateCondition(xmlcondition.getCondition().get(0));
     }
 
 

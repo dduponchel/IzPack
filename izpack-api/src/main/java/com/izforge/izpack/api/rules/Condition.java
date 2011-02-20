@@ -23,6 +23,7 @@ package com.izforge.izpack.api.rules;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.data.AutomatedInstallData;
+import org.izpack.xsd.conditions.ConditionType;
 
 import java.io.Serializable;
 
@@ -71,10 +72,10 @@ public abstract class Condition implements Serializable
      * Parse and initialize this condition from parsed values. An exception
      * should be thrown if the condition description has not the expected
      * XML format, something missing or obviously bad values.
-     * @param The root element to parse from
+     * @param xmlCondition the condition to parse
      * @throws Exception on a parse error
      */
-    public abstract void readFromXML(IXMLElement xmlcondition) throws Exception;
+    public abstract void readFromXML(ConditionType xmlCondition) throws Exception;
 
     public abstract boolean isTrue();
 

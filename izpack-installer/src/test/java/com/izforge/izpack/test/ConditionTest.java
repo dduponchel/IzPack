@@ -29,6 +29,8 @@ import com.izforge.izpack.test.junit.PicoRunner;
 import org.hamcrest.Matcher;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsNull;
+import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.conditions.Conditions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,49 +66,43 @@ public class ConditionTest
     @Before
     public void setUp() throws Exception
     {
-        IXMLElement conditionspec = new XMLElementImpl("conditions");
-        Document ownerDocument = conditionspec.getElement().getOwnerDocument();
-        conditionspec.addChild(createVariableCondition("test.true", "TEST", "true", ownerDocument));
-        conditionspec.addChild(createRefCondition("test.true2", "test.true", ownerDocument));
+        Conditions conditionspec = new Conditions();
+        ConditionType conditionTestTrue = createVariableCondition("test.true", "TEST", "true");
+        conditionspec.getCondition().add(conditionTestTrue);
+        conditionspec.getCondition().add(createRefCondition("test.true2", conditionTestTrue));
 //        conditionspec.addChild(createNotCondition("test.not.true", createVariableCondition("test.true", "TEST", "true", ownerDocument), ownerDocument));
-        conditionspec.addChild(createNotCondition("test.not.true", createRefCondition("", "test.true", ownerDocument), ownerDocument));
+        conditionspec.getCondition().add(createNotCondition("test.not.true", createRefCondition("", conditionTestTrue)));
         rules = new RulesEngineImpl(idata, classPathCrawler, conditionContainer);
         conditionContainer.addComponent(RulesEngine.class, rules);
         rules.analyzeXml(conditionspec);
     }
 
-    public IXMLElement createNotCondition(String id, IXMLElement condition, Document ownerDocument)
+    public ConditionType createNotCondition(String id, ConditionType condition)
     {
-        IXMLElement not = new XMLElementImpl("condition", ownerDocument);
-        not.setAttribute("type", "not");
-        not.setAttribute("id", id);
-        not.addChild(condition);
+        ConditionType not = new ConditionType();
+        not.setType("not");
+        not.setId(id);
+        not.getCondition().add(condition);
 
         return not;
     }
 
-    public IXMLElement createVariableCondition(String id, String variable, String expvalue, Document ownerDocument)
+    public ConditionType createVariableCondition(String id, String variable, String expvalue)
     {
-        IXMLElement variablecondition = new XMLElementImpl("condition", ownerDocument);
-        variablecondition.setAttribute("type", "variable");
-        variablecondition.setAttribute("id", id);
-        IXMLElement name = new XMLElementImpl("name", ownerDocument);
-        name.setContent(variable);
-        IXMLElement value = new XMLElementImpl("value", ownerDocument);
-        value.setContent(expvalue);
-
-        variablecondition.addChild(name);
-        variablecondition.addChild(value);
-
+        ConditionType variablecondition = new ConditionType();
+        variablecondition.setType("variable");
+        variablecondition.setId(id);
+        variablecondition.setName(variable);
+        variablecondition.setValue(expvalue);
         return variablecondition;
     }
 
-    public IXMLElement createRefCondition(String id, String refid, Document ownerDocument)
+    public ConditionType createRefCondition(String id, ConditionType refid)
     {
-        IXMLElement refcondition = new XMLElementImpl("condition", ownerDocument);
-        refcondition.setAttribute("type", "ref");
-        refcondition.setAttribute("refid", refid);
-        refcondition.setAttribute("id", id);
+        ConditionType refcondition = new ConditionType();
+        refcondition.setType("ref");
+        refcondition.setRefid(refid);
+        refcondition.setId(id);
 
         return refcondition;
     }

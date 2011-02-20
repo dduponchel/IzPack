@@ -25,6 +25,7 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * Checks to see whether the user who is running the installer is the same as the user who should be
@@ -73,17 +74,13 @@ public class UserCondition extends Condition
      * {@inheritDoc}
      */
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        IXMLElement userElement = xmlcondition.getFirstChildNamed("requiredusername");
+        requiredUsername = xmlcondition.getRequiredusername();
 
-        if (userElement == null)
+        if (requiredUsername == null)
         {
             throw new Exception("Missing \"requiredusername\" element in condition \"" +  getId() + "\"");
-        }
-        else
-        {
-            this.requiredUsername = userElement.getContent();
         }
     }
 

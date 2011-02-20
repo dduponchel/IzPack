@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
-           attributeFormDefault="unqualified"
-           targetNamespace="http://izpack.org/xsd/conditions"
-           xmlns="http://izpack.org/xsd/conditions">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://izpack.org/xsd/conditions"
+           targetNamespace="http://izpack.org/xsd/conditions" elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
     <xs:element name="conditions">
         <xs:complexType>
             <xs:sequence>
@@ -10,34 +9,10 @@
                 <xs:element ref="panelcondition" minOccurs="0" maxOccurs="unbounded" />
                 <xs:element ref="packcondition" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
+            <xs:attribute name="version" />
         </xs:complexType>
     </xs:element>
-    <xs:element name="condition">
-        <xs:complexType>
-            <xs:choice>
-                <xs:sequence>
-                    <xs:element ref="condition" />
-                    <xs:element ref="condition" minOccurs="0" />
-                </xs:sequence>
-                <xs:sequence>
-                    <xs:element ref="name" />
-                    <xs:element ref="value" />
-                </xs:sequence>
-                <xs:element ref="packid" />
-                <xs:sequence>
-                    <xs:element ref="java" />
-                    <xs:element ref="returnvalue" />
-                </xs:sequence>
-                <xs:sequence>
-                    <xs:element ref="obligatory" minOccurs="0" />
-                    <xs:element ref="module" maxOccurs="unbounded" />
-                </xs:sequence>
-            </xs:choice>
-            <xs:attribute name="id" type="xs:ID" use="optional" />
-            <xs:attribute name="type" type="xs:string" use="required" />
-            <xs:attribute name="refid" type="xs:IDREF" use="optional" />
-        </xs:complexType>
-    </xs:element>
+    <xs:element name="condition" type="conditionType" />
     <xs:element name="packcondition">
         <xs:complexType>
             <xs:attribute name="packid" type="xs:string" use="required" />
@@ -51,9 +26,6 @@
             <xs:attribute name="conditionid" type="xs:IDREF" use="required" />
         </xs:complexType>
     </xs:element>
-    <xs:element name="name" type="xs:string" />
-    <xs:element name="value" type="xs:string" />
-    <xs:element name="packid" />
     <xs:element name="returnvalue">
         <xs:complexType mixed="true">
             <xs:attribute name="type" type="xs:string" use="required" />
@@ -62,13 +34,55 @@
     <xs:element name="java">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="class" />
-                <xs:element ref="field" />
+                <xs:element name="class" type="xs:string" />
+                <xs:element name="method" type="xs:string" minOccurs="0" />
+                <xs:element name="field" type="xs:string" minOccurs="0" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="field" type="xs:string" />
-    <xs:element name="class" type="xs:string" />
-    <xs:element name="module" />
-    <xs:element name="obligatory" />
+
+    <xs:element name="operator">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="eq" />
+                <xs:enumeration value="ne" />
+                <xs:enumeration value="leq" />
+                <xs:enumeration value="lt" />
+                <xs:enumeration value="geq" />
+                <xs:enumeration value="gt" />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:complexType name="conditionType">
+        <xs:sequence>
+            <xs:element ref="condition" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="name" type="xs:string" minOccurs="0" />
+            <xs:element name="value" type="xs:string" minOccurs="0" />
+            <xs:element name="packid" type="xs:string" minOccurs="0" />
+            <xs:element name="string" type="xs:string" minOccurs="0" />
+            <xs:element name="dir" type="xs:string" minOccurs="0" />
+            <xs:element ref="java" minOccurs="0" />
+            <xs:element ref="returnvalue" minOccurs="0" />
+            <xs:element name="obligatory" minOccurs="0" />
+            <xs:element name="module" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="arg1" type="xs:string" minOccurs="0" />
+            <xs:element name="arg2" type="xs:string" minOccurs="0" />
+            <xs:element name="file" type="xs:string" minOccurs="0" />
+            <xs:element name="variable" type="xs:string" minOccurs="0" />
+            <xs:element name="requiredusername" type="xs:string" minOccurs="0" />
+            <xs:element ref="operator" minOccurs="0" />
+
+			<xs:element name="extra" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+                        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional" />
+        <xs:attribute name="type" type="xs:string" use="required" />
+        <xs:attribute name="refid" type="xs:IDREF" use="optional" />
+    </xs:complexType>
 </xs:schema>

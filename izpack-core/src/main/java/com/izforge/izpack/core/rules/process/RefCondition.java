@@ -24,6 +24,7 @@ package com.izforge.izpack.core.rules.process;
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.api.rules.RulesEngine;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * References an already defined condition
@@ -48,9 +49,10 @@ public class RefCondition extends Condition
      * {@inheritDoc}
      */
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        this.referencedConditionId = xmlcondition.getAttribute("refid");
+        this.referencedConditionId = ((ConditionType)xmlcondition.getRefid()).getId();
+        // TODO I think that check is now done by jaxb (maybe only in strict mode ?)
         if (this.referencedConditionId == null)
         {
             throw new Exception("Missing attribute \"refid\" in condition \"" + getId() + "\"");

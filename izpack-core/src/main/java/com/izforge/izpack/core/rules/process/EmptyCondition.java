@@ -33,6 +33,7 @@ import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorBase;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorImpl;
 import com.izforge.izpack.util.Debug;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * This condition checks if a certain type is empty
@@ -106,23 +107,38 @@ public class EmptyCondition extends Condition
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
         if (xmlcondition != null)
         {
-            if (xmlcondition.getChildrenCount() != 1)
+            int count = 0;
+            if (xmlcondition.getString() != null)
+            {
+                count++;
+                content = xmlcondition.getString();
+                contentType = ContentType.STRING;
+            }
+            if (xmlcondition.getVariable() != null)
+            {
+                count++;
+                content = xmlcondition.getVariable();
+                contentType = ContentType.VARIABLE;
+            }
+            if (xmlcondition.getFile() != null)
+            {
+                count++;
+                content = xmlcondition.getFile();
+                contentType = ContentType.FILE;
+            }
+            if (xmlcondition.getDir() != null)
+            {
+                count++;
+                content = xmlcondition.getDir();
+                contentType = ContentType.DIR;
+            }
+            if (count != 1)
             {
                 throw new Exception("Condition \"" + getId() + "\" needs exactly one nested element");
-            }
-            IXMLElement child = xmlcondition.getChildAtIndex(0);
-            this.contentType = ContentType.getFromAttribute(child.getName());
-            if (this.contentType != null)
-            {
-                this.content = child.getContent();
-            }
-            else
-            {
-                throw new Exception("Unknown nested element '"+child.getName()+"' to condition \"" + getId() + "\"");
             }
             if (this.content == null || this.content.length() == 0)
             {

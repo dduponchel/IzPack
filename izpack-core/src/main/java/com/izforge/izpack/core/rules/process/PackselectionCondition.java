@@ -25,6 +25,7 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.data.Pack;
 import com.izforge.izpack.api.rules.Condition;
+import org.izpack.xsd.conditions.ConditionType;
 
 import java.util.List;
 
@@ -44,13 +45,10 @@ public class PackselectionCondition extends Condition
      */
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
-        try
-        {
-            this.packid = xmlcondition.getFirstChildNamed("packid").getContent();
-        }
-        catch (Exception e)
+        this.packid = xmlcondition.getPackid();
+        if(packid == null)
         {
             throw new Exception("Missing nested element in condition \"" + getId() + "\"");
         }

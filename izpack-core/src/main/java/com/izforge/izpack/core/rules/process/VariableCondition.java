@@ -26,6 +26,7 @@ import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.api.substitutor.VariableSubstitutor;
 import com.izforge.izpack.core.substitutor.VariableSubstitutorImpl;
+import org.izpack.xsd.conditions.ConditionType;
 
 /**
  * @author Dennis Reil, <izpack@reil-online.de>
@@ -60,12 +61,12 @@ public class VariableCondition extends Condition
     }
 
     @Override
-    public void readFromXML(IXMLElement xmlcondition) throws Exception
+    public void readFromXML(ConditionType xmlcondition) throws Exception
     {
         try
         {
-            this.variablename = xmlcondition.getFirstChildNamed("name").getContent();
-            this.value = xmlcondition.getFirstChildNamed("value").getContent();
+            this.variablename = xmlcondition.getName();
+            this.value = xmlcondition.getValue();
         }
         catch (Exception e)
         {
