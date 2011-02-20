@@ -46,6 +46,10 @@ import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.api.rules.RulesEngine;
 import com.izforge.izpack.api.substitutor.SubstitutionType;
 import com.izforge.izpack.api.substitutor.VariableSubstitutor;
+import com.izforge.izpack.api.xml.IXmlReader;
+import com.izforge.izpack.api.xml.IXmlWriter;
+import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
+import com.izforge.izpack.api.xml.impl.JaxbXmlWriter;
 import com.izforge.izpack.compiler.container.CompilerContainer;
 import com.izforge.izpack.compiler.data.CompilerData;
 import com.izforge.izpack.compiler.data.PropertyManager;
@@ -68,6 +72,8 @@ import com.izforge.izpack.util.*;
 import com.izforge.izpack.util.file.DirectoryScanner;
 import com.izforge.izpack.util.file.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.izpack.xsd.langpack.Langpack;
+import org.izpack.xsd.langpack.Str;
 
 import java.io.*;
 import java.net.URL;
@@ -2666,7 +2672,7 @@ public class CompilerConfig extends Thread
         OutputStream os = null;
         try
         {
-            IXMLParser parser = new XMLParser();
+            IXmlReader xmlReader = new JaxbXmlReader();
 
             // loop through all packsLang resources, e.g. packsLang.xml_eng, packsLang.xml_deu, ...
             for (String id : packsLangUrlMap.keySet())
@@ -2686,26 +2692,22 @@ public class CompilerConfig extends Thread
                 }
                 else
                 {
-                    IXMLElement mergedPacksLang = null;
+                    Langpack mergedPacksLang = null;
 
                     // loop through all that belong to the given identifier
                     for (URL packslangURL : packsLangURLs)
                     {
                         // parsing xml
-                        IXMLElement xml = parser.parse(packslangURL);
+                        Langpack langpackXml = xmlReader.readLocales(packslangURL);
                         if (mergedPacksLang == null)
                         {
                             // just keep the first file
-                            mergedPacksLang = xml;
+                            mergedPacksLang = langpackXml;
                         }
                         else
                         {
                             // append data of all xml-docs into the first document
-                            List<IXMLElement> langStrings = xml.getChildrenNamed("str");
-                            for (IXMLElement langString : langStrings)
-                            {
-                                mergedPacksLang.addChild(langString);
-                            }
+                            mergedPacksLang.getStr().addAll(langpackXml.getStr());
                         }
                     }
 
@@ -2716,8 +2718,8 @@ public class CompilerConfig extends Thread
                     FileOutputStream outFile = new FileOutputStream(mergedPackLangFile);
                     os = new BufferedOutputStream(outFile);
 
-                    IXMLWriter xmlWriter = new XMLWriter(os);
-                    xmlWriter.write(mergedPacksLang);
+                    IXmlWriter xmlWriter = new JaxbXmlWriter();
+                    xmlWriter.write(mergedPacksLang, os);
                     os.close();
                     os = null;
 

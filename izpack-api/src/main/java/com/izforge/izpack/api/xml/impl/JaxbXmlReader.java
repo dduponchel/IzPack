@@ -58,22 +58,39 @@ public class JaxbXmlReader implements IXmlReader
     }
 
     @Override
+    public Langpack readLocales(URL url)
+    {
+        return unmarshal(url, XmlSchema.LANGPACK, Langpack.class, null);
+    }
+
+    @Override
     public Conditions readConditions(InputStream input)
     {
         return unmarshal(input, XmlSchema.CONDITIONS, Conditions.class, null);
     }
 
+
+    private <T> T unmarshal(URL url, XmlSchema xmlSchema, Class<T> type, String systemId)
+    {
+        return unmarshal(new InputSource(url.toExternalForm()), xmlSchema, type, systemId);
+    }
+
+    private <T> T unmarshal(InputStream input, XmlSchema xmlSchema, Class<T> type, String systemId)
+    {
+        return unmarshal(new InputSource(input), xmlSchema, type, systemId);
+    }
+
     /**
      * unmarshal a xml with jaxb.
      *
-     * @param input     the stream containing the xml
-     * @param xmlSchema the xsd to use
-     * @param type      the java class
-     * @param systemId  System id of the file parsed
+     * @param inputSource the source containing the xml
+     * @param xmlSchema   the xsd to use
+     * @param type        the java class
+     * @param systemId    System id of the file parsed
      * @return an unmarshalled xml
      * @throws XMLException if something is wrong with the xml
      */
-    private <T> T unmarshal(InputStream input, XmlSchema xmlSchema, Class<T> type, String systemId)
+    private <T> T unmarshal(InputSource inputSource, XmlSchema xmlSchema, Class<T> type, String systemId)
             throws XMLException
     {
         try
@@ -99,7 +116,6 @@ public class JaxbXmlReader implements IXmlReader
             XMLFilter inFilter = new NamespaceFilter(xmlSchema.getNamespace(), true);
             inFilter.setParent(xmlReader);
 
-            InputSource inputSource = new InputSource(input);
             inputSource.setSystemId(systemId);
             SAXSource source = new SAXSource(inFilter, inputSource);
             source.setXMLReader(inFilter);

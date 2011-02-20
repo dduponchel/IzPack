@@ -7,6 +7,7 @@ import org.izpack.xsd.installation.Installation;
 import org.izpack.xsd.langpack.Langpack;
 
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Transform an xml into a java object
@@ -58,4 +59,13 @@ public interface IXmlReader
      * @throws XMLException if something is wrong with the xml
      */
     Langpack readLocales(InputStream input);
+
+    /**
+     * unmarshal an xml into a list of locales
+     *
+     * @param url the url to the xml
+     * @return a Langpack
+     * @throws XMLException if something is wrong with the xml
+     */
+    Langpack readLocales(URL url);
 }

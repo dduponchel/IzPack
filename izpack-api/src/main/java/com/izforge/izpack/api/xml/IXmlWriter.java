@@ -2,6 +2,7 @@ package com.izforge.izpack.api.xml;
 
 import com.izforge.izpack.api.adaptator.XMLException;
 import org.izpack.xsd.installation.Installation;
+import org.izpack.xsd.langpack.Langpack;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -28,4 +29,13 @@ public interface IXmlWriter
      * @throws XMLException if something went wrong
      */
     void write(Installation installation, OutputStream os) throws XMLException;
+
+    /**
+     * Marshal an object into an xml
+     *
+     * @param langpack     the object to write
+     * @param os           the stream to put the xml into
+     * @throws XMLException if something went wrong
+     */
+    void write(Langpack langpack, OutputStream os) throws XMLException;
 }
