@@ -24,7 +24,7 @@ package com.izforge.izpack.core.rules.process;
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.api.rules.RulesEngine;
-import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.installation.ConditionType;
 
 /**
  * References an already defined condition

@@ -18,6 +18,7 @@ public class JaxbXmlReaderTest
     private static final String NOT_A_XML = "not-a-xml.txt";
     private static final String INVALID_XML = "invalid.xml";
     private static final String OLD_XML = "old.xml";
+    private static final String WITH_CONDITIONS_XML = "with-conditions.xml";
 
     private JaxbXmlReader xmlReader;
 
@@ -63,8 +64,8 @@ public class JaxbXmlReaderTest
     }
 
     @Test
-    public void substitution()
+    public void installationWithConditions() throws JAXBException
     {
-        throw new UnsupportedOperationException("not implemented yet");
+        xmlReader.readInstallation(this.getClass().getResourceAsStream(WITH_CONDITIONS_XML));
     }
 }

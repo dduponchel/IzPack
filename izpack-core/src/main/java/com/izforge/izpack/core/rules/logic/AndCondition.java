@@ -27,7 +27,7 @@ import java.util.Set;
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
-import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.installation.ConditionType;
 
 /**
  * Defines a condition where both operands have to be true

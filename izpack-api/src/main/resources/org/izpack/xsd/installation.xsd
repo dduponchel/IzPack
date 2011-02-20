@@ -2,6 +2,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://izpack.org/xsd/installation"
            targetNamespace="http://izpack.org/xsd/installation" elementFormDefault="qualified"
            attributeFormDefault="unqualified">
+
+    <xs:include schemaLocation="conditions.xsd" />
     <xs:element name="installation">
     <xs:complexType>
         <xs:all>
@@ -28,6 +30,7 @@
                     <xs:documentation>The panels in order</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element ref="conditions" />
             <xs:element name="listeners" type="listenersType" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>The listeners section</xs:documentation>

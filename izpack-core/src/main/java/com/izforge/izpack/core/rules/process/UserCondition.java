@@ -25,7 +25,7 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.util.Debug;
-import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.installation.ConditionType;
 
 /**
  * Checks to see whether the user who is running the installer is the same as the user who should be

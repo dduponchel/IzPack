@@ -1,7 +1,6 @@
 <installation version="1.0"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xmlns="http://izpack.org/xsd/installation"
-              xsi:schemaLocation="http://izpack.org/xsd/installation ../../../../../../../../../izpack-core/src/main/resources/org/izpack/xsd/installation.xsd">
+              xmlns="http://izpack.org/xsd/installation">
     <info>
         <appname>name</appname>
         <appversion>version</appversion>
@@ -16,4 +15,10 @@
     <locale>
         <langpack iso3="fr" />
     </locale>
+    <conditions>
+        <condition type="variable" id="standardinstallation">
+            <name>setup.type</name>
+            <value>standard</value>
+        </condition>
+    </conditions>
 </installation>

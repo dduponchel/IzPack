@@ -24,7 +24,7 @@ package com.izforge.izpack.core.rules.logic;
 import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.core.rules.RulesEngineImpl;
-import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.installation.ConditionType;
 
 /**
  * @author Dennis Reil, <Dennis.Reil@reddot.de>

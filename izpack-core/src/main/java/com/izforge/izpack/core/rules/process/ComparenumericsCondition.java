@@ -26,7 +26,7 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.util.Debug;
-import org.izpack.xsd.conditions.ConditionType;
+import org.izpack.xsd.installation.ConditionType;
 
 /**
  * @author Dennis Reil, <izpack@reil-online.de>

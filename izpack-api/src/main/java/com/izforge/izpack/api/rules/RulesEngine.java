@@ -1,8 +1,8 @@
 package com.izforge.izpack.api.rules;
 
 import com.izforge.izpack.api.adaptator.IXMLElement;
-import org.izpack.xsd.conditions.ConditionType;
-import org.izpack.xsd.conditions.Conditions;
+import org.izpack.xsd.installation.ConditionType;
+import org.izpack.xsd.installation.Conditions;
 
 import java.io.OutputStream;
 import java.io.Serializable;

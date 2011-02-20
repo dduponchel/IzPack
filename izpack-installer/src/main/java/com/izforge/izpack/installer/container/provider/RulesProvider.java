@@ -12,7 +12,7 @@ import com.izforge.izpack.merge.resolve.ClassPathCrawler;
 import com.izforge.izpack.util.Debug;
 import com.izforge.izpack.api.xml.IXmlReader;
 import com.izforge.izpack.api.xml.impl.JaxbXmlReader;
-import org.izpack.xsd.conditions.Conditions;
+import org.izpack.xsd.installation.Conditions;
 import org.picocontainer.injectors.Provider;
 
 import java.io.InputStream;

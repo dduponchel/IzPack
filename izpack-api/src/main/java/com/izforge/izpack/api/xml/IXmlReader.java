@@ -1,7 +1,7 @@
 package com.izforge.izpack.api.xml;
 
 import com.izforge.izpack.api.adaptator.XMLException;
-import org.izpack.xsd.conditions.Conditions;
+import org.izpack.xsd.installation.Conditions;
 import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
 import org.izpack.xsd.langpack.Langpack;

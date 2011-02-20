@@ -5,7 +5,7 @@ import com.izforge.izpack.api.adaptator.XMLException;
 import com.izforge.izpack.api.adaptator.impl.XMLParser;
 import com.izforge.izpack.api.xml.IXmlReader;
 import com.izforge.izpack.api.xml.XmlSchema;
-import org.izpack.xsd.conditions.Conditions;
+import org.izpack.xsd.installation.Conditions;
 import org.izpack.xsd.icons.Icons;
 import org.izpack.xsd.installation.Installation;
 import org.izpack.xsd.langpack.Langpack;

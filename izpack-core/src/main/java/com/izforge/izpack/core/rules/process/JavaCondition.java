@@ -25,9 +25,9 @@ import com.izforge.izpack.api.adaptator.IXMLElement;
 import com.izforge.izpack.api.adaptator.impl.XMLElementImpl;
 import com.izforge.izpack.api.rules.Condition;
 import com.izforge.izpack.util.Debug;
-import org.izpack.xsd.conditions.ConditionType;
-import org.izpack.xsd.conditions.Java;
-import org.izpack.xsd.conditions.Returnvalue;
+import org.izpack.xsd.installation.ConditionType;
+import org.izpack.xsd.installation.Java;
+import org.izpack.xsd.installation.Returnvalue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

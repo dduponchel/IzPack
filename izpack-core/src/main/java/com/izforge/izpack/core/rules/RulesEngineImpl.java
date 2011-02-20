@@ -40,10 +40,10 @@ import com.izforge.izpack.core.rules.process.JavaCondition;
 import com.izforge.izpack.core.rules.process.PackselectionCondition;
 import com.izforge.izpack.merge.resolve.ClassPathCrawler;
 import com.izforge.izpack.util.Debug;
-import org.izpack.xsd.conditions.ConditionType;
-import org.izpack.xsd.conditions.Conditions;
-import org.izpack.xsd.conditions.Packcondition;
-import org.izpack.xsd.conditions.Panelcondition;
+import org.izpack.xsd.installation.ConditionType;
+import org.izpack.xsd.installation.Conditions;
+import org.izpack.xsd.installation.Packcondition;
+import org.izpack.xsd.installation.Panelcondition;
 
 import java.io.OutputStream;
 import java.util.*;
