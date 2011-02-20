@@ -18,6 +18,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.helpers.DefaultValidationEventHandler;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.*;
@@ -101,6 +102,8 @@ public class JaxbXmlReader implements IXmlReader
             // validate the xml with an xsd
             unmarshaller.setSchema(xmlSchema.getSchema());
 
+            // a DefaultValidationEventHandler is enough to display the line number
+            unmarshaller.setEventHandler(new DefaultValidationEventHandler());
 
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             saxParserFactory.setNamespaceAware(true);

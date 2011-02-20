@@ -17,8 +17,7 @@ public class NamespaceFilter extends XMLFilterImpl
     //State variable
     private boolean addedNamespace = false;
 
-    public NamespaceFilter(String namespaceUri,
-                           boolean addNamespace)
+    public NamespaceFilter(String namespaceUri, boolean addNamespace)
     {
         if (addNamespace)
         {
@@ -46,8 +45,6 @@ public class NamespaceFilter extends XMLFilterImpl
     public void startPrefixMapping(String prefix, String url)
             throws SAXException
     {
-
-
         if (addNamespace)
         {
             this.startControlledPrefixMapping();
